@@ -2,6 +2,12 @@ package com.truesportpt.backend.entity;
 
 import jakarta.persistence.*;
 
+//////////////////////////////////////////////////////////////////////////
+//
+// The User class is created to store and define user information, and how 
+// that data is mapped to the SQL database.
+
+//////////////////////////////////////////////////////////////////////////       
 @Entity
 @Table(name = "users")
 public class User {
