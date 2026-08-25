@@ -25,6 +25,23 @@ public class UserService {
 
     public User createUser(User user)
     {
+        if (userRepository.existsByEmail(user.getEmail())) 
+        {
+            throw new RuntimeException("Error: email already exists");
+        }
         return userRepository.save(user);
+    }
+
+    public Optional<User> getUser(Long id)
+    {
+        Optional<User> user = userRepository.findById(id);
+        if (user == null) 
+        {
+            throw new RuntimeException("Error: user does not exist");
+        }
+        else
+        {
+            return user;
+        }
     }
 }
