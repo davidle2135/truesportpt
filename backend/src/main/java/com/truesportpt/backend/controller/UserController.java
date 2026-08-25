@@ -1,7 +1,7 @@
 package com.truesportpt.backend.controller;
 
-import com.truesportpt.backend.entity.*;
 import com.truesportpt.backend.service.*;
+import com.truesportpt.backend.dto.*;
 
 import org.springframework.http.*;
 // import java.util.List;
@@ -26,11 +26,11 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody User user) 
+    public ResponseEntity<?> createUser(@RequestBody UserRequest request) 
     {
         try 
         {
-            User u = userService.createUser(user);
+            UserResponse u = userService.createUser(request);
             return ResponseEntity.ok(u);
         } 
         catch (IllegalArgumentException e)
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) 
+    public ResponseEntity<UserResponse> getUser(@PathVariable Long id) 
     {
         return userService.getUser(id);
     }

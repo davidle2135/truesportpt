@@ -1,5 +1,7 @@
 package com.truesportpt.backend.service;
 
+import com.truesportpt.backend.dto.UserRequest;
+import com.truesportpt.backend.dto.UserResponse;
 import com.truesportpt.backend.entity.*;
 import com.truesportpt.backend.repository.*;
 
@@ -25,21 +27,31 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User createUser(User user)
+    public UserResponse createUser(UserRequest request)
     {
-        if (userRepository.existsByEmail(user.getEmail())) 
+        if (userRepository.existsByEmail(request.getEmail())) 
         {
             throw new IllegalArgumentException("Error: email already exists");
         }
-        return userRepository.save(user);
+
+        User user = new User();
+        user.setEmail(request.getEmail());
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setPassword(request.getPassword());
+        userRepository.save(user);
+
+        return new UserResponse(user.getID(), user.getEmail(), user.getFirstName(), user.getLastName());
     }
 
-    public ResponseEntity<User> getUser(Long id)
+    public ResponseEntity<UserResponse> getUser(Long id)
     {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent())
         {
-            return ResponseEntity.ok(user.get());
+            User opt = user.get();
+            UserResponse response = new UserResponse(id, opt.getEmail(), opt.getFirstName(), opt.getLastName());
+            return ResponseEntity.ok(response);
         }
         else
         {
