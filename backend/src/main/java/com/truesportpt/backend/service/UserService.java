@@ -2,6 +2,8 @@ package com.truesportpt.backend.service;
 
 import com.truesportpt.backend.entity.*;
 import com.truesportpt.backend.repository.*;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.*;
 import java.util.List;
 import java.util.Optional;
@@ -32,16 +34,16 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Optional<User> getUser(Long id)
+    public ResponseEntity<User> getUser(Long id)
     {
         Optional<User> user = userRepository.findById(id);
-        if (user == null) 
+        if (user.isPresent())
         {
-            throw new RuntimeException("Error: user does not exist");
+            return ResponseEntity.ok(user.get());
         }
         else
         {
-            return user;
+            return ResponseEntity.notFound().build();
         }
     }
 }

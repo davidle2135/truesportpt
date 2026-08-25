@@ -3,10 +3,9 @@ package com.truesportpt.backend.controller;
 import com.truesportpt.backend.entity.*;
 import com.truesportpt.backend.service.*;
 
-import java.util.Optional;
-
-// import org.springframework.http.*;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+
 
 // import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public Optional<User> getUser(@PathVariable Long id) 
+    public ResponseEntity<User> getUser(@PathVariable Long id) 
     {
         return userService.getUser(id);
     }
