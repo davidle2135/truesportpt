@@ -4,14 +4,8 @@ import com.truesportpt.backend.entity.*;
 import com.truesportpt.backend.service.*;
 
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
-
-
 // import java.util.List;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 
@@ -32,9 +26,17 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) 
+    public ResponseEntity<?> createUser(@RequestBody User user) 
     {
-        return userService.createUser(user);
+        try 
+        {
+            User u = userService.createUser(user);
+            return ResponseEntity.ok(u);
+        } 
+        catch (IllegalArgumentException e)
+        {
+            return ResponseEntity.status(409).body(e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")

@@ -29,7 +29,7 @@ public class UserService {
     {
         if (userRepository.existsByEmail(user.getEmail())) 
         {
-            throw new RuntimeException("Error: email already exists");
+            throw new IllegalArgumentException("Error: email already exists");
         }
         return userRepository.save(user);
     }
