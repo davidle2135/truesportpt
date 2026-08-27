@@ -4,8 +4,10 @@ import com.truesportpt.backend.dto.UserRequest;
 import com.truesportpt.backend.dto.UserResponse;
 import com.truesportpt.backend.entity.*;
 import com.truesportpt.backend.repository.*;
+import com.truesportpt.backend.config.*;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.*;
 import java.util.List;
 import java.util.Optional;
@@ -21,10 +23,13 @@ import java.util.Optional;
 public class UserService {
     
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository)
+    // Constructor injection for Spring beans
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder)
     {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserResponse createUser(UserRequest request)
@@ -38,7 +43,7 @@ public class UserService {
         user.setEmail(request.getEmail());
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
-        user.setPassword(request.getPassword());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         userRepository.save(user);
 
         return new UserResponse(user.getID(), user.getEmail(), user.getFirstName(), user.getLastName());
