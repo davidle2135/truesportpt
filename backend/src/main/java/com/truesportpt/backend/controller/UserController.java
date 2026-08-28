@@ -30,15 +30,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody @Valid UserRequest request) 
     {
-        try 
-        {
-            UserResponse u = userService.createUser(request);
-            return ResponseEntity.ok(u);
-        } 
-        catch (IllegalArgumentException e)
-        {
-            return ResponseEntity.status(409).body(e.getMessage());
-        }
+        return ResponseEntity.ok(userService.createUser(request));
     }
 
     @GetMapping("/{id}")
