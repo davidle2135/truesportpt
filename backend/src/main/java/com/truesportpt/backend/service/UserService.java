@@ -4,7 +4,7 @@ import com.truesportpt.backend.dto.UserRequest;
 import com.truesportpt.backend.dto.UserResponse;
 import com.truesportpt.backend.entity.*;
 import com.truesportpt.backend.repository.*;
-import com.truesportpt.backend.config.*;
+// import com.truesportpt.backend.config.*;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;

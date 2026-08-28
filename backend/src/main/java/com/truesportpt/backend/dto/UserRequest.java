@@ -1,5 +1,6 @@
 package com.truesportpt.backend.dto;
 
+import jakarta.validation.constraints.*;
 
 //////////////////////////////////////////////////////////////////////////
 // 
@@ -11,9 +12,17 @@ package com.truesportpt.backend.dto;
 //////////////////////////////////////////////////////////////////////////
 public class UserRequest {
 
+    @NotBlank
     private String firstName;
+
+    @NotBlank
     private String lastName;
+
+    @NotBlank
+    @Size(min = 10)
     private String password;
+
+    @Email
     private String email;
 
     public String getFirstName()

@@ -3,6 +3,8 @@ package com.truesportpt.backend.controller;
 import com.truesportpt.backend.service.*;
 import com.truesportpt.backend.dto.*;
 
+import jakarta.validation.Valid;
+
 import org.springframework.http.*;
 // import java.util.List;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody UserRequest request) 
+    public ResponseEntity<?> createUser(@RequestBody @Valid UserRequest request) 
     {
         try 
         {
@@ -44,7 +46,4 @@ public class UserController {
     {
         return userService.getUser(id);
     }
-    
-    
-
 }
