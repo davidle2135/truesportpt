@@ -1,5 +1,7 @@
 package com.truesportpt.backend.repository;
 
+import java.util.Optional;
+
 import com.truesportpt.backend.entity.*;
 import org.springframework.data.jpa.repository.*;
 
@@ -12,4 +14,5 @@ import org.springframework.data.jpa.repository.*;
 //////////////////////////////////////////////////////////////////////////
 public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByEmail(String email);
+    Optional<User> findByEmail(String email);
 }

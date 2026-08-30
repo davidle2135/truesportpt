@@ -1,7 +1,6 @@
 package com.truesportpt.backend.service;
 
-import com.truesportpt.backend.dto.UserRequest;
-import com.truesportpt.backend.dto.UserResponse;
+import com.truesportpt.backend.dto.*;
 import com.truesportpt.backend.entity.*;
 import com.truesportpt.backend.exception.UserNotFound;
 import com.truesportpt.backend.repository.*;
@@ -10,7 +9,6 @@ import com.truesportpt.backend.repository.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.*;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -25,12 +23,15 @@ public class UserService {
     
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JWTService jwtService;
 
     // Constructor injection for Spring beans
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder)
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder
+        , JWTService jwtService)
     {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     public UserResponse createUser(UserRequest request)
@@ -63,5 +64,21 @@ public class UserService {
         {
             throw new UserNotFound("Error: user doesn't exist");
         }
+    }
+
+    public AuthenticationResponse loginRequest(LoginRequest request)
+    {
+        User user = userRepository.findByEmail(request.getEmail())
+            .orElseThrow(() -> new UserNotFound("User not found"));
+
+        boolean matches = passwordEncoder.matches(request.getPassword(), user.getPassword());
+
+        if (!matches)
+        {
+            throw new IllegalArgumentException("Invalid Credentials");
+        }
+
+        String token = jwtService.generateToken(user.getEmail());
+        return new AuthenticationResponse(token);
     }
 }
