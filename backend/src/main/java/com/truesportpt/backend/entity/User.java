@@ -1,10 +1,6 @@
 package com.truesportpt.backend.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 //////////////////////////////////////////////////////////////////////////
 //

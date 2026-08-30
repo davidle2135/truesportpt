@@ -3,6 +3,7 @@ package com.truesportpt.backend.service;
 import com.truesportpt.backend.dto.UserRequest;
 import com.truesportpt.backend.dto.UserResponse;
 import com.truesportpt.backend.entity.*;
+import com.truesportpt.backend.exception.UserNotFound;
 import com.truesportpt.backend.repository.*;
 // import com.truesportpt.backend.config.*;
 
@@ -60,7 +61,7 @@ public class UserService {
         }
         else
         {
-            return ResponseEntity.notFound().build();
+            throw new UserNotFound("Error: user doesn't exist");
         }
     }
 }
